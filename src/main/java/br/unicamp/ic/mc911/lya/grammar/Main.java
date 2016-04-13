@@ -17,10 +17,16 @@ public class Main {
         final PrinterLyaVisitor visitor = new PrinterLyaVisitor();
         final LyaLexer lexer = new LyaLexer(new ANTLRInputStream(new FileInputStream(inputFileName)));
         final LyaParser parser = new LyaParser(new CommonTokenStream(lexer));
+        final LyaErrorListener errorListener = new LyaErrorListener();
+
+        lexer.addErrorListener(errorListener);
+        parser.addErrorListener(errorListener);
 
         String result = visitor.visit(parser.program());
 
-        System.out.println(result);
+        if (!errorListener.hasErrors) {
+            System.out.println(result);
+        }
     }
 
 }

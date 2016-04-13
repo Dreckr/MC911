@@ -26,7 +26,8 @@ public class LyaParser extends Parser {
 		IF=45, IN=46, LOC=47, TYPE=48, OD=49, PROC=50, REF=51, RESULT=52, RETURN=53, 
 		RETURNS=54, SYN=55, THEN=56, TO=57, WHILE=58, BOOL=59, CHAR=60, FALSE=61, 
 		INT=62, LENGTH=63, LOWER=64, NULL=65, NUM=66, PRED=67, PRINT=68, READ=69, 
-		SUCC=70, TRUE=71, UPPER=72, IDENTIFIER=73, CharLiteral=74, StringLiteral=75;
+		SUCC=70, TRUE=71, UPPER=72, IDENTIFIER=73, CharLiteral=74, StringLiteral=75, 
+		UnterminatedBlockComment=76, UnterminatedStringLiteral=77;
 	public static final int
 		RULE_program = 0, RULE_statement = 1, RULE_declaration_statement = 2, 
 		RULE_declaration_list = 3, RULE_declaration = 4, RULE_initialization = 5, 
@@ -118,7 +119,8 @@ public class LyaParser extends Parser {
 		"END", "EXIT", "FI", "FOR", "IF", "IN", "LOC", "TYPE", "OD", "PROC", "REF", 
 		"RESULT", "RETURN", "RETURNS", "SYN", "THEN", "TO", "WHILE", "BOOL", "CHAR", 
 		"FALSE", "INT", "LENGTH", "LOWER", "NULL", "NUM", "PRED", "PRINT", "READ", 
-		"SUCC", "TRUE", "UPPER", "IDENTIFIER", "CharLiteral", "StringLiteral"
+		"SUCC", "TRUE", "UPPER", "IDENTIFIER", "CharLiteral", "StringLiteral", 
+		"UnterminatedBlockComment", "UnterminatedStringLiteral"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -6283,7 +6285,7 @@ public class LyaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3M\u0342\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3O\u0342\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+

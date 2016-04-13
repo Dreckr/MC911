@@ -97,6 +97,9 @@ IDENTIFIER : [a-zA-Z_][a-zA-Z_0-9]*;
 CharLiteral : '\'' Character? '\'';
 StringLiteral : '\"' Character*? '\"';
 
+UnterminatedBlockComment :  OPENCOMMENT Character*?  Nl { System.out.println("Unterminated comment"); } -> skip;
+UnterminatedStringLiteral : '"' Character*?  ~["] { System.out.println("Unterminated string"); };
+
 // Parser
 
 program : statement+;
