@@ -208,6 +208,18 @@ public class LyaBaseListener implements LyaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMode_name(LyaParser.Mode_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMode_name(LyaParser.Mode_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterInteger_mode(LyaParser.Integer_modeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1187,6 +1199,30 @@ public class LyaBaseListener implements LyaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEnd_value(LyaParser.End_valueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDiscrete_expression(LyaParser.Discrete_expressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDiscrete_expression(LyaParser.Discrete_expressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInteger_expression(LyaParser.Integer_expressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInteger_expression(LyaParser.Integer_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

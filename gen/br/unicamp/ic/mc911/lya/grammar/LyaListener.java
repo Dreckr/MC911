@@ -168,6 +168,16 @@ public interface LyaListener extends ParseTreeListener {
 	 */
 	void exitDiscrete_mode(LyaParser.Discrete_modeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LyaParser#mode_name}.
+	 * @param ctx the parse tree
+	 */
+	void enterMode_name(LyaParser.Mode_nameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LyaParser#mode_name}.
+	 * @param ctx the parse tree
+	 */
+	void exitMode_name(LyaParser.Mode_nameContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LyaParser#integer_mode}.
 	 * @param ctx the parse tree
 	 */
@@ -987,6 +997,26 @@ public interface LyaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEnd_value(LyaParser.End_valueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LyaParser#discrete_expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterDiscrete_expression(LyaParser.Discrete_expressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LyaParser#discrete_expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitDiscrete_expression(LyaParser.Discrete_expressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LyaParser#integer_expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterInteger_expression(LyaParser.Integer_expressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LyaParser#integer_expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitInteger_expression(LyaParser.Integer_expressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LyaParser#range_enumeration}.
 	 * @param ctx the parse tree

@@ -129,6 +129,13 @@ public class LyaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ly
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitMode_name(LyaParser.Mode_nameContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitInteger_mode(LyaParser.Integer_modeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -697,6 +704,20 @@ public class LyaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ly
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitEnd_value(LyaParser.End_valueContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDiscrete_expression(LyaParser.Discrete_expressionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitInteger_expression(LyaParser.Integer_expressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

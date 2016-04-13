@@ -107,6 +107,12 @@ public interface LyaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDiscrete_mode(LyaParser.Discrete_modeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LyaParser#mode_name}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMode_name(LyaParser.Mode_nameContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LyaParser#integer_mode}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -598,6 +604,18 @@ public interface LyaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitEnd_value(LyaParser.End_valueContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LyaParser#discrete_expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDiscrete_expression(LyaParser.Discrete_expressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LyaParser#integer_expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInteger_expression(LyaParser.Integer_expressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LyaParser#range_enumeration}.
 	 * @param ctx the parse tree

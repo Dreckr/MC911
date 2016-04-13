@@ -98,7 +98,7 @@ CharLiteral : '\'' Character? '\'';
 StringLiteral : '\"' Character*? '\"';
 
 UnterminatedBlockComment :  OPENCOMMENT Character*?  Nl { System.out.println("Unterminated comment"); } -> skip;
-UnterminatedStringLiteral : '"' Character*?  ~["] { System.out.println("Unterminated string"); } -> skip;
+UnterminatedStringLiteral : '"' Character*? ~["] { System.out.println("Unterminated string"); } -> skip;
 
 // Parser
 
@@ -123,13 +123,14 @@ constant_expression : expression;
 newmode_statement : TYPE newmode_list SEMICOLON;
 newmode_list : mode_definition ( COMMA mode_definition )*;
 mode_definition : identifier_list EQUALS modo;
-modo :  IDENTIFIER // mode_name
+modo :  mode_name
         | discrete_mode
         | reference_mode
         | composite_mode;
 discrete_mode :  integer_mode
                  | boolean_mode
                  | character_mode;
+mode_name : IDENTIFIER;
 integer_mode :  INT;
 boolean_mode :  BOOL;
 character_mode : CHAR;
@@ -162,11 +163,11 @@ simple_location : location_name
 location_name: IDENTIFIER; // added
 dereferenced_reference : primitive_value ARROW;
 string_element : string_location LBRACKET start_element RBRACKET;
-start_element : expression; // integer_expression
+start_element : integer_expression;
 string_slice : string_location LBRACKET left_element COLON right_element RBRACKET;
 string_location : IDENTIFIER;
-left_element : expression; // integer_expression
-right_element : expression; // integer_expression
+left_element : integer_expression;
+right_element : integer_expression;
 array_element : LBRACKET expression_list RBRACKET; // changed
 expression_list : expression ( COMMA expression )*;
 array_slice : LBRACKET lower_bound COLON upper_bound RBRACKET; // changed
@@ -182,7 +183,7 @@ literal : integer_literal
 integer_literal :  digit_sequence;
 digit_sequence : ( DIGIT | UNDERSCORE )+;
 boolean_literal : FALSE | TRUE;
-character_literal : CharLiteral; // | SINGLEQUOTE ^( <integer_literal> ) SINGLEQUOTE
+character_literal : CharLiteral;
 empty_literal : NULL;
 character_string_literal : StringLiteral;
 
@@ -250,9 +251,11 @@ iteration : step_enumeration | range_enumeration;
 step_enumeration : loop_counter assignment_symbol
     start_value step_value? DOWN? end_value;
 loop_counter : IDENTIFIER;
-start_value : expression; // discrete_expression
-step_value : BY expression; // integer_expression
-end_value : TO expression; // discrete_expression
+start_value : discrete_expression;
+step_value : BY integer_expression;
+end_value : TO discrete_expression;
+discrete_expression : expression;
+integer_expression : expression; // added
 range_enumeration : loop_counter DOWN? IN discrete_mode_name;
 while_control : WHILE boolean_expression;
 
