@@ -98,7 +98,7 @@ CharLiteral : '\'' Character? '\'';
 StringLiteral : '\"' Character*? '\"';
 
 UnterminatedBlockComment :  OPENCOMMENT Character*?  Nl { System.out.println("Unterminated comment"); } -> skip;
-UnterminatedStringLiteral : '"' Character*?  ~["] { System.out.println("Unterminated string"); };
+UnterminatedStringLiteral : '"' Character*?  ~["] { System.out.println("Unterminated string"); } -> skip;
 
 // Parser
 
@@ -130,12 +130,9 @@ modo :  IDENTIFIER // mode_name
 discrete_mode :  integer_mode
                  | boolean_mode
                  | character_mode;
-//                 | discrete_range_mode; // discrete_mode -> discrete_range_mode -> discrete_mode causes left recursion
 integer_mode :  INT;
 boolean_mode :  BOOL;
 character_mode : CHAR;
-//discrete_range_mode : discrete_mode_name LPARENS literal_range RPARENS
-//                       | discrete_mode LPARENS literal_range RPARENS;
 discrete_mode_name : IDENTIFIER;
 literal_range : lower_bound COLON upper_bound;
 upper_bound : expression;
@@ -176,10 +173,6 @@ array_slice : LBRACKET lower_bound COLON upper_bound RBRACKET; // changed
 array_location : simple_location array_location_range+; // changed
 array_location_range : array_element | array_slice; // added
 primitive_value :  (literal | array_primitive_value) parenthesized_expression?; // changed
-//location_contents : location;
-//value_name : synonym_name | value_enumeration_name;
-//synonym_name : IDENTIFIER;
-//value_enumeration_name : IDENTIFIER;
 
 literal : integer_literal
           | boolean_literal
@@ -191,10 +184,7 @@ digit_sequence : ( DIGIT | UNDERSCORE )+;
 boolean_literal : FALSE | TRUE;
 character_literal : CharLiteral; // | SINGLEQUOTE ^( <integer_literal> ) SINGLEQUOTE
 empty_literal : NULL;
-//set_literal : set_element_name;
-//set_mode_name : IDENTIFIER;
 character_string_literal : StringLiteral;
-quote : DOUBLEQUOTE DOUBLEQUOTE;
 
 value_array_element : LBRACKET expression_list RBRACKET; // changed
 value_array_slice : LBRACKET lower_bound COLON upper_bound RBRACKET; // changed

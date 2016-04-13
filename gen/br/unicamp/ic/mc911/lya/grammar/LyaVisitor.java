@@ -329,12 +329,6 @@ public interface LyaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCharacter_string_literal(LyaParser.Character_string_literalContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LyaParser#quote}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitQuote(LyaParser.QuoteContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link LyaParser#value_array_element}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

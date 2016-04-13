@@ -388,13 +388,6 @@ public class LyaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ly
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitQuote(LyaParser.QuoteContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitValue_array_element(LyaParser.Value_array_elementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
