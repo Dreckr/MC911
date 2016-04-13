@@ -256,7 +256,7 @@ step_value : BY integer_expression;
 end_value : TO discrete_expression;
 discrete_expression : expression;
 integer_expression : expression; // added
-range_enumeration : loop_counter DOWN? IN discrete_mode_name;
+range_enumeration : loop_counter DOWN? IN discrete_mode;
 while_control : WHILE boolean_expression;
 
 call_action :  builtin_call | procedure_call;

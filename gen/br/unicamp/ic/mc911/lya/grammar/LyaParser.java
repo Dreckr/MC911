@@ -6106,8 +6106,8 @@ public class LyaParser extends Parser {
 			return getRuleContext(Loop_counterContext.class,0);
 		}
 		public TerminalNode IN() { return getToken(LyaParser.IN, 0); }
-		public Discrete_mode_nameContext discrete_mode_name() {
-			return getRuleContext(Discrete_mode_nameContext.class,0);
+		public Discrete_modeContext discrete_mode() {
+			return getRuleContext(Discrete_modeContext.class,0);
 		}
 		public TerminalNode DOWN() { return getToken(LyaParser.DOWN, 0); }
 		public Range_enumerationContext(ParserRuleContext parent, int invokingState) {
@@ -6150,7 +6150,7 @@ public class LyaParser extends Parser {
 			setState(738);
 			match(IN);
 			setState(739);
-			discrete_mode_name();
+			discrete_mode();
 			}
 		}
 		catch (RecognitionException re) {
@@ -7577,7 +7577,7 @@ public class LyaParser extends Parser {
 		";\2\2\u02da\u02db\5\u00c8e\2\u02db\u00c7\3\2\2\2\u02dc\u02dd\5x=\2\u02dd"+
 		"\u00c9\3\2\2\2\u02de\u02df\5x=\2\u02df\u00cb\3\2\2\2\u02e0\u02e2\5\u00c0"+
 		"a\2\u02e1\u02e3\7(\2\2\u02e2\u02e1\3\2\2\2\u02e2\u02e3\3\2\2\2\u02e3\u02e4"+
-		"\3\2\2\2\u02e4\u02e5\7\60\2\2\u02e5\u02e6\5*\26\2\u02e6\u00cd\3\2\2\2"+
+		"\3\2\2\2\u02e4\u02e5\7\60\2\2\u02e5\u02e6\5 \21\2\u02e6\u00cd\3\2\2\2"+
 		"\u02e7\u02e8\7<\2\2\u02e8\u02e9\5|?\2\u02e9\u00cf\3\2\2\2\u02ea\u02ed"+
 		"\5\u00e0q\2\u02eb\u02ed\5\u00d2j\2\u02ec\u02ea\3\2\2\2\u02ec\u02eb\3\2"+
 		"\2\2\u02ed\u00d1\3\2\2\2\u02ee\u02ef\5\u00e4s\2\u02ef\u02f1\7\17\2\2\u02f0"+

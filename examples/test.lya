@@ -1,0 +1,6 @@
+dcl i int;
+dcl r ref int = -> i;
+
+do
+    for i in int(1:3);
+od;
