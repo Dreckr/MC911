@@ -12,7 +12,7 @@ public class PrinterLyaVisitor extends LyaBaseVisitor<String> {
         String result = LyaParser.ruleNames[node.getRuleContext().getRuleIndex()];
         int n = node.getChildCount();
 
-        result += ": " + node.getText();
+//        result += ": " + node.getText();
         for(int i = 0; i < n && this.shouldVisitNextChild(node, result); ++i) {
             ParseTree c = node.getChild(i);
             String childResult = c.accept(this);
