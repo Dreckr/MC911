@@ -129,11 +129,16 @@ modo :  mode_name
         | composite_mode;
 discrete_mode :  integer_mode
                  | boolean_mode
-                 | character_mode;
+                 | character_mode
+                 | discrete_range_mode;
 mode_name : IDENTIFIER;
 integer_mode :  INT;
 boolean_mode :  BOOL;
 character_mode : CHAR;
+discrete_range_mode : discrete_mode_name LPARENS literal_range RPARENS
+                        | integer_mode LPARENS literal_range RPARENS
+                        | boolean_mode LPARENS literal_range RPARENS
+                        | character_mode LPARENS literal_range RPARENS;
 discrete_mode_name : IDENTIFIER;
 literal_range : lower_bound COLON upper_bound;
 upper_bound : expression;
@@ -146,17 +151,10 @@ array_mode : ARRAY LBRACKET index_mode ( COMMA index_mode )* RBRACKET element_mo
 index_mode : discrete_mode | literal_range;
 element_mode : modo;
 
-//location :  location_name
-//            | dereferenced_reference
-//            | string_element
-//            | string_slice
-//            | array_element // location -> array_element -> array_location -> location causes left recursion
-//            | array_slice // location -> array_slice -> array_location -> location causes left recursion
-//            | call_action;
-location :  simple_location
-            | array_location;
-simple_location : location_name
+location :  location_name
             | dereferenced_reference
+            | array_element
+            | array_slice
             | string_element
             | string_slice
             | call_action;
@@ -165,16 +163,17 @@ dereferenced_reference : primitive_value ARROW;
 string_element : string_location LBRACKET start_element RBRACKET;
 start_element : integer_expression;
 string_slice : string_location LBRACKET left_element COLON right_element RBRACKET;
-string_location : IDENTIFIER;
+string_location : location_name;
 left_element : integer_expression;
 right_element : integer_expression;
-array_element : LBRACKET expression_list RBRACKET; // changed
+array_element : array_location LBRACKET expression_list RBRACKET;
 expression_list : expression ( COMMA expression )*;
-array_slice : LBRACKET lower_bound COLON upper_bound RBRACKET; // changed
-array_location : simple_location array_location_range+; // changed
-array_location_range : array_element | array_slice; // added
-primitive_value :  (literal | array_primitive_value) parenthesized_expression?; // changed
-
+array_slice : array_location LBRACKET lower_bound COLON upper_bound RBRACKET;
+array_location : location_name;
+primitive_value : simple_primitive_value
+                    | array_primitive_value;
+simple_primitive_value : literal
+                         | parenthesized_expression;
 literal : integer_literal
           | boolean_literal
           | character_literal
@@ -187,10 +186,10 @@ character_literal : CharLiteral;
 empty_literal : NULL;
 character_string_literal : StringLiteral;
 
-value_array_element : LBRACKET expression_list RBRACKET; // changed
-value_array_slice : LBRACKET lower_bound COLON upper_bound RBRACKET; // changed
-array_primitive_value_complement : value_array_element | value_array_slice; // added
-array_primitive_value : literal array_primitive_value_complement+; // changed
+value_array_element : LBRACKET expression_list RBRACKET (array_accessor)?;
+value_array_slice : LBRACKET lower_bound COLON upper_bound RBRACKET (array_accessor)?;
+array_accessor: value_array_element | value_array_slice;
+array_primitive_value : simple_primitive_value array_accessor;
 parenthesized_expression : LPARENS expression RPARENS;
 expression : operand0 | conditional_expression;
 conditional_expression :  IF boolean_expression then_expression else_expression FI

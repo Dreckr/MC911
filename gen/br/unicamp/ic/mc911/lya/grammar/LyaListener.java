@@ -1,4 +1,4 @@
-// Generated from /home/diegorocha/Documents/MC911/src/main/java/br/unicamp/ic/mc911/lya/grammar/Lya.g4 by ANTLR 4.5.1
+// Generated from /home/diegorocha/workspace/MC911/src/main/java/br/unicamp/ic/mc911/lya/grammar/Lya.g4 by ANTLR 4.5.1
 package br.unicamp.ic.mc911.lya.grammar;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -208,6 +208,16 @@ public interface LyaListener extends ParseTreeListener {
 	 */
 	void exitCharacter_mode(LyaParser.Character_modeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LyaParser#discrete_range_mode}.
+	 * @param ctx the parse tree
+	 */
+	void enterDiscrete_range_mode(LyaParser.Discrete_range_modeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LyaParser#discrete_range_mode}.
+	 * @param ctx the parse tree
+	 */
+	void exitDiscrete_range_mode(LyaParser.Discrete_range_modeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LyaParser#discrete_mode_name}.
 	 * @param ctx the parse tree
 	 */
@@ -327,16 +337,6 @@ public interface LyaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLocation(LyaParser.LocationContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link LyaParser#simple_location}.
-	 * @param ctx the parse tree
-	 */
-	void enterSimple_location(LyaParser.Simple_locationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link LyaParser#simple_location}.
-	 * @param ctx the parse tree
-	 */
-	void exitSimple_location(LyaParser.Simple_locationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LyaParser#location_name}.
 	 * @param ctx the parse tree
@@ -458,16 +458,6 @@ public interface LyaListener extends ParseTreeListener {
 	 */
 	void exitArray_location(LyaParser.Array_locationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link LyaParser#array_location_range}.
-	 * @param ctx the parse tree
-	 */
-	void enterArray_location_range(LyaParser.Array_location_rangeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link LyaParser#array_location_range}.
-	 * @param ctx the parse tree
-	 */
-	void exitArray_location_range(LyaParser.Array_location_rangeContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link LyaParser#primitive_value}.
 	 * @param ctx the parse tree
 	 */
@@ -477,6 +467,16 @@ public interface LyaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPrimitive_value(LyaParser.Primitive_valueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LyaParser#simple_primitive_value}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimple_primitive_value(LyaParser.Simple_primitive_valueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LyaParser#simple_primitive_value}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimple_primitive_value(LyaParser.Simple_primitive_valueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LyaParser#literal}.
 	 * @param ctx the parse tree
@@ -568,15 +568,15 @@ public interface LyaListener extends ParseTreeListener {
 	 */
 	void exitValue_array_slice(LyaParser.Value_array_sliceContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link LyaParser#array_primitive_value_complement}.
+	 * Enter a parse tree produced by {@link LyaParser#array_accessor}.
 	 * @param ctx the parse tree
 	 */
-	void enterArray_primitive_value_complement(LyaParser.Array_primitive_value_complementContext ctx);
+	void enterArray_accessor(LyaParser.Array_accessorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link LyaParser#array_primitive_value_complement}.
+	 * Exit a parse tree produced by {@link LyaParser#array_accessor}.
 	 * @param ctx the parse tree
 	 */
-	void exitArray_primitive_value_complement(LyaParser.Array_primitive_value_complementContext ctx);
+	void exitArray_accessor(LyaParser.Array_accessorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LyaParser#array_primitive_value}.
 	 * @param ctx the parse tree

@@ -1,4 +1,4 @@
-// Generated from /home/diegorocha/Documents/MC911/src/main/java/br/unicamp/ic/mc911/lya/grammar/Lya.g4 by ANTLR 4.5.1
+// Generated from /home/diegorocha/workspace/MC911/src/main/java/br/unicamp/ic/mc911/lya/grammar/Lya.g4 by ANTLR 4.5.1
 package br.unicamp.ic.mc911.lya.grammar;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -131,6 +131,12 @@ public interface LyaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCharacter_mode(LyaParser.Character_modeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LyaParser#discrete_range_mode}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDiscrete_range_mode(LyaParser.Discrete_range_modeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LyaParser#discrete_mode_name}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -202,12 +208,6 @@ public interface LyaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLocation(LyaParser.LocationContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link LyaParser#simple_location}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSimple_location(LyaParser.Simple_locationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LyaParser#location_name}.
 	 * @param ctx the parse tree
@@ -281,17 +281,17 @@ public interface LyaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArray_location(LyaParser.Array_locationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LyaParser#array_location_range}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArray_location_range(LyaParser.Array_location_rangeContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link LyaParser#primitive_value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitPrimitive_value(LyaParser.Primitive_valueContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LyaParser#simple_primitive_value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSimple_primitive_value(LyaParser.Simple_primitive_valueContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LyaParser#literal}.
 	 * @param ctx the parse tree
@@ -347,11 +347,11 @@ public interface LyaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitValue_array_slice(LyaParser.Value_array_sliceContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LyaParser#array_primitive_value_complement}.
+	 * Visit a parse tree produced by {@link LyaParser#array_accessor}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitArray_primitive_value_complement(LyaParser.Array_primitive_value_complementContext ctx);
+	T visitArray_accessor(LyaParser.Array_accessorContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LyaParser#array_primitive_value}.
 	 * @param ctx the parse tree

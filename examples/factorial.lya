@@ -1,4 +1,4 @@
-/* Compute the fatorial of an integer */
+/* Compute the factorial of an integer */
 
 fat: proc (n int) returns (int);
   if n==0 then

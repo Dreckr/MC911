@@ -1,4 +1,4 @@
-// Generated from /home/diegorocha/Documents/MC911/src/main/java/br/unicamp/ic/mc911/lya/grammar/Lya.g4 by ANTLR 4.5.1
+// Generated from /home/diegorocha/workspace/MC911/src/main/java/br/unicamp/ic/mc911/lya/grammar/Lya.g4 by ANTLR 4.5.1
 package br.unicamp.ic.mc911.lya.grammar;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -256,6 +256,18 @@ public class LyaBaseListener implements LyaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDiscrete_range_mode(LyaParser.Discrete_range_modeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDiscrete_range_mode(LyaParser.Discrete_range_modeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDiscrete_mode_name(LyaParser.Discrete_mode_nameContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -395,18 +407,6 @@ public class LyaBaseListener implements LyaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLocation(LyaParser.LocationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSimple_location(LyaParser.Simple_locationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSimple_location(LyaParser.Simple_locationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -556,18 +556,6 @@ public class LyaBaseListener implements LyaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArray_location_range(LyaParser.Array_location_rangeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArray_location_range(LyaParser.Array_location_rangeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterPrimitive_value(LyaParser.Primitive_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -575,6 +563,18 @@ public class LyaBaseListener implements LyaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPrimitive_value(LyaParser.Primitive_valueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSimple_primitive_value(LyaParser.Simple_primitive_valueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSimple_primitive_value(LyaParser.Simple_primitive_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -688,13 +688,13 @@ public class LyaBaseListener implements LyaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArray_primitive_value_complement(LyaParser.Array_primitive_value_complementContext ctx) { }
+	@Override public void enterArray_accessor(LyaParser.Array_accessorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArray_primitive_value_complement(LyaParser.Array_primitive_value_complementContext ctx) { }
+	@Override public void exitArray_accessor(LyaParser.Array_accessorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

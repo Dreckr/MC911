@@ -1,4 +1,4 @@
-// Generated from /home/diegorocha/Documents/MC911/src/main/java/br/unicamp/ic/mc911/lya/grammar/Lya.g4 by ANTLR 4.5.1
+// Generated from /home/diegorocha/workspace/MC911/src/main/java/br/unicamp/ic/mc911/lya/grammar/Lya.g4 by ANTLR 4.5.1
 package br.unicamp.ic.mc911.lya.grammar;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -157,6 +157,13 @@ public class LyaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ly
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitDiscrete_range_mode(LyaParser.Discrete_range_modeContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitDiscrete_mode_name(LyaParser.Discrete_mode_nameContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -235,13 +242,6 @@ public class LyaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ly
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitLocation(LyaParser.LocationContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitSimple_location(LyaParser.Simple_locationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -332,14 +332,14 @@ public class LyaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ly
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArray_location_range(LyaParser.Array_location_rangeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitPrimitive_value(LyaParser.Primitive_valueContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitPrimitive_value(LyaParser.Primitive_valueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSimple_primitive_value(LyaParser.Simple_primitive_valueContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -409,7 +409,7 @@ public class LyaBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ly
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArray_primitive_value_complement(LyaParser.Array_primitive_value_complementContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArray_accessor(LyaParser.Array_accessorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
