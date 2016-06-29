@@ -1,4 +1,4 @@
-package br.unicamp.ic.mc911.lya.grammar.semantic;
+package br.unicamp.ic.mc911.lya.grammar.environment;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.List;
 /**
  * @author Diego Rocha (diego.rocha@movile.com)
  */
-public enum VoidType implements Type {
-    VOID;
+public enum NullType implements Type {
+    NULL;
 
     @Override
     public Symbol getName() {
-        return new Symbol(SymbolType.Mode, "void");
+        return new Symbol(SymbolType.Mode, "null");
     }
 
     @Override

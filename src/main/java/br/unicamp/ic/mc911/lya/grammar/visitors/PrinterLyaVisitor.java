@@ -1,5 +1,7 @@
-package br.unicamp.ic.mc911.lya.grammar;
+package br.unicamp.ic.mc911.lya.grammar.visitors;
 
+import br.unicamp.ic.mc911.lya.grammar.LyaBaseVisitor;
+import br.unicamp.ic.mc911.lya.grammar.LyaParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.RuleNode;
 

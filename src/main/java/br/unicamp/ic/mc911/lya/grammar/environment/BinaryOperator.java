@@ -1,10 +1,10 @@
-package br.unicamp.ic.mc911.lya.grammar.semantic;
+package br.unicamp.ic.mc911.lya.grammar.environment;
 
 /**
  * @author Diego Rocha (diego.rocha@movile.com)
  */
 public enum BinaryOperator {
-    PLUS, MINUS, MULT, DIV, MOD, EQ, DIFF, GT, GTE, LT, LTE, AND, OR;
+    PLUS, MINUS, MULT, DIV, MOD, EQ, DIFF, GT, GTE, LT, LTE, AND, OR, CONCAT, BinaryOperator;
 
     public static BinaryOperator findOperatorByToken(String token) {
         if (token.equals("+")) return PLUS;
@@ -20,6 +20,7 @@ public enum BinaryOperator {
         else if (token.equals("<=")) return LTE;
         else if (token.equals("&&")) return AND;
         else if (token.equals("||")) return OR;
+        else if (token.equals("&")) return CONCAT;
         else return null;
     }
 }

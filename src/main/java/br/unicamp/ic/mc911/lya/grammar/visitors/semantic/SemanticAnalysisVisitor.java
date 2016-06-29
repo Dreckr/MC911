@@ -1,10 +1,11 @@
-package br.unicamp.ic.mc911.lya.grammar.semantic.visitors;
+package br.unicamp.ic.mc911.lya.grammar.visitors.semantic;
 
 import br.unicamp.ic.mc911.lya.grammar.LyaBaseVisitor;
 import br.unicamp.ic.mc911.lya.grammar.LyaParser;
-import br.unicamp.ic.mc911.lya.grammar.semantic.*;
-import org.antlr.v4.runtime.ParserRuleContext;
+import br.unicamp.ic.mc911.lya.grammar.environment.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import static br.unicamp.ic.mc911.lya.grammar.visitors.utils.LyaUtils.*;
 
 /**
  * @author Diego Rocha (diego.rocha@movile.com)
@@ -32,7 +33,7 @@ public class SemanticAnalysisVisitor extends LyaBaseVisitor<Environment> {
     // Visit formal_parameter
     @Override
     public Environment visitDeclaration(LyaParser.DeclarationContext context) {
-        Type declarationType = typeFromModeContext(context.modo());
+        Type declarationType = typeFromModeContext(environment, context.modo());
 
         for (TerminalNode tn : context.identifier_list().IDENTIFIER()) {
             Symbol declarationSymbol = new Symbol(SymbolType.Variable, tn.getText());
@@ -57,7 +58,7 @@ public class SemanticAnalysisVisitor extends LyaBaseVisitor<Environment> {
         Type type = typeExtractionVisitor.visit(context.constant_expression());
 
         if (context.modo() != null) {
-            Type modeType = typeFromModeContext(context.modo());
+            Type modeType = typeFromModeContext(environment, context.modo());
 
             if (!type.equals(modeType)) {
                 throwError("Constant expression must be of type " + modeType, context);
@@ -81,7 +82,7 @@ public class SemanticAnalysisVisitor extends LyaBaseVisitor<Environment> {
         Type returnType = VoidType.VOID;
 
         if (context.procedure_definition().result_spec() != null) {
-            returnType = typeFromModeContext(context.procedure_definition().result_spec().modo());
+            returnType = typeFromModeContext(environment, context.procedure_definition().result_spec().modo());
         }
 
         environment.addSymbol(procedureName, procedureSymbol);
@@ -93,7 +94,7 @@ public class SemanticAnalysisVisitor extends LyaBaseVisitor<Environment> {
 
     @Override
     public Environment visitMode_definition(LyaParser.Mode_definitionContext context) {
-        Type type = typeFromModeContext(context.modo());
+        Type type = typeFromModeContext(environment, context.modo());
 
         for (TerminalNode tn : context.identifier_list().IDENTIFIER()) {
             Symbol modeSymbol = new Symbol(SymbolType.Mode, tn.getText());
@@ -118,7 +119,7 @@ public class SemanticAnalysisVisitor extends LyaBaseVisitor<Environment> {
 
     @Override
     public Environment visitFormal_parameter(LyaParser.Formal_parameterContext context) {
-        Type type = typeFromModeContext(context.parameter_spec().modo());
+        Type type = typeFromModeContext(environment, context.parameter_spec().modo());
 
         for (TerminalNode tn : context.identifier_list().IDENTIFIER()) {
             Symbol parameterSymbol = new Symbol(SymbolType.Variable, tn.getText());
@@ -286,78 +287,6 @@ public class SemanticAnalysisVisitor extends LyaBaseVisitor<Environment> {
         }
 
         return environment;
-    }
-
-    private Type typeFromModeContext(LyaParser.ModoContext context) {
-        if (context.mode_name() != null) {
-            String modeName = context.mode_name().getText();
-            Symbol modeSymbol = environment.lookup(modeName);
-
-            if (modeSymbol == null) {
-                throwError("Undefined mode " + modeName, context);
-            }
-
-            Type type = environment.findType(modeSymbol);
-
-            if (type == null) {
-                throwError(modeName + " is not a mode", context);
-            }
-
-            return type;
-        } else if (context.reference_mode() != null) {
-            String modeName = context.reference_mode().modo().getText();
-            Symbol modeSymbol = environment.lookup(modeName);
-
-            if (modeSymbol == null) {
-                throwError("Undefined mode " + modeName, context);
-            }
-
-            Type type = environment.findType(modeSymbol);
-
-            if (type == null) {
-                throwError(modeName + " is not a mode", context);
-            }
-
-            return new ReferenceType(type);
-        } else if (context.composite_mode() != null) {
-            if (context.composite_mode().array_mode() != null) {
-                String modeName = context.composite_mode().array_mode().element_mode().getText();
-                Symbol modeSymbol = environment.lookup(modeName);
-
-                if (modeSymbol == null) {
-                    throwError("Undefined mode " + modeName, context);
-                }
-
-                Type type = environment.findType(modeSymbol);
-
-                if (type == null) {
-                    throwError(modeName + " is not a mode", context);
-                }
-
-                return new ArrayType(type);
-            } else {
-                return PrimitiveType.STRING;
-            }
-        } else {
-            String modeName = context.discrete_mode().getText();
-            Symbol modeSymbol = environment.lookup(modeName);
-
-            if (modeSymbol == null) {
-                throwError("Undefined mode " + modeName, context);
-            }
-
-            Type type = environment.findType(modeSymbol);
-
-            if (type == null) {
-                throwError(modeName + " is not a mode", context);
-            }
-
-            return type;
-        }
-    }
-
-    private void throwError(String message, ParserRuleContext context) {
-        throw new IllegalArgumentException(message + " on line " + context.getStart().getLine());
     }
 
     // Symbol types

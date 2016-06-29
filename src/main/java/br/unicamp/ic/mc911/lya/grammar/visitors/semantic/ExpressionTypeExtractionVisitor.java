@@ -1,13 +1,16 @@
-package br.unicamp.ic.mc911.lya.grammar.semantic.visitors;
+package br.unicamp.ic.mc911.lya.grammar.visitors.semantic;
 
 import br.unicamp.ic.mc911.lya.grammar.LyaBaseVisitor;
 import br.unicamp.ic.mc911.lya.grammar.LyaParser;
-import br.unicamp.ic.mc911.lya.grammar.semantic.*;
+import br.unicamp.ic.mc911.lya.grammar.environment.*;
 import org.antlr.v4.runtime.ParserRuleContext;
+
+import static br.unicamp.ic.mc911.lya.grammar.visitors.utils.LyaUtils.throwError;
 
 /**
  * @author Diego Rocha (diego.rocha@movile.com)
  */
+// TODO: consider reference
 public class ExpressionTypeExtractionVisitor extends LyaBaseVisitor<Type> {
 
     private final Environment environment;
@@ -317,10 +320,6 @@ public class ExpressionTypeExtractionVisitor extends LyaBaseVisitor<Type> {
         Type referencedType = context.location().accept(this);
 
         return new ReferenceType(referencedType);
-    }
-
-    private void throwError(String message, ParserRuleContext context) {
-        throw new IllegalArgumentException(message + " on line " + context.getStart().getLine());
     }
 
 }

@@ -1,4 +1,4 @@
-package br.unicamp.ic.mc911.lya.grammar.semantic;
+package br.unicamp.ic.mc911.lya.grammar.environment;
 
 import java.util.Collections;
 import java.util.List;

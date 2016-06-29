@@ -1,6 +1,9 @@
-dcl i int;
-dcl r ref int = -> i;
+dcl i, e int = 10;
 
-do
-    for i in int(1:3);
-od;
+procedure: proc (n int, m int) returns (int);
+    dcl a int = 10;
+    print(n);
+    return n;
+end;
+
+procedure(i, e);

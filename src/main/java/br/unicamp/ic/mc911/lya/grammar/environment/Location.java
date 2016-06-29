@@ -1,4 +1,4 @@
-package br.unicamp.ic.mc911.lya.grammar.semantic;
+package br.unicamp.ic.mc911.lya.grammar.environment;
 
 /**
  * @author Diego Rocha (diego.rocha@movile.com)

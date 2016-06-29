@@ -1,20 +1,19 @@
-package br.unicamp.ic.mc911.lya.grammar.semantic;
+package br.unicamp.ic.mc911.lya.grammar.environment;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static br.unicamp.ic.mc911.lya.grammar.semantic.BinaryOperator.*;
-import static br.unicamp.ic.mc911.lya.grammar.semantic.UnaryOperator.*;
+import static br.unicamp.ic.mc911.lya.grammar.environment.BinaryOperator.*;
 
 /**
  * @author Diego Rocha (diego.rocha@movile.com)
  */
 public enum PrimitiveType implements Type {
 
-    INT(new Symbol(SymbolType.Mode, "int"), false, Arrays.asList(PLUS, MINUS, MULT, DIV, MOD, EQ, DIFF, GT, GTE, LT, LTE), Arrays.asList(POSITIVE, NEGATIVE), null),
+    INT(new Symbol(SymbolType.Mode, "int"), false, Arrays.asList(PLUS, MINUS, MULT, DIV, MOD, EQ, DIFF, GT, GTE, LT, LTE), Arrays.asList(UnaryOperator.POSITIVE, UnaryOperator.NEGATIVE), null),
     CHAR(new Symbol(SymbolType.Mode, "char"), false, Arrays.asList(EQ, DIFF, GT, GTE, LT, LTE), Collections.<UnaryOperator>emptyList(), null),
-    BOOL(new Symbol(SymbolType.Mode, "bool"), false, Arrays.asList(EQ, DIFF, AND, OR), Collections.singletonList(NEGATION), null),
+    BOOL(new Symbol(SymbolType.Mode, "bool"), false, Arrays.asList(EQ, DIFF, AND, OR), Collections.singletonList(UnaryOperator.NEGATION), null),
     STRING(new Symbol(SymbolType.Mode, "string"), true, Arrays.asList(PLUS, EQ, DIFF), Collections.<UnaryOperator>emptyList(), CHAR);
 
     private Symbol name;
