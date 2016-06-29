@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static br.unicamp.ic.mc911.lya.grammar.visitors.utils.LyaUtils.throwError;
-import static br.unicamp.ic.mc911.lya.grammar.visitors.utils.LyaUtils.typeFromModeContext;
 
 /**
  * @author Diego Rocha (diego.rocha@movile.com)

@@ -11,8 +11,6 @@ import static br.unicamp.ic.mc911.lya.grammar.visitors.utils.LyaUtils.*;
  * @author Diego Rocha (diego.rocha@movile.com)
  */
 // This should fill the symbol table and check for undefined usages.
-// Semantic rule #1
-// TODO: check for variable redefinition
 public class SemanticAnalysisVisitor extends LyaBaseVisitor<Environment> {
 
     private final Environment environment;

@@ -10,7 +10,6 @@ import static br.unicamp.ic.mc911.lya.grammar.visitors.utils.LyaUtils.throwError
 /**
  * @author Diego Rocha (diego.rocha@movile.com)
  */
-// TODO: consider reference
 public class ExpressionTypeExtractionVisitor extends LyaBaseVisitor<Type> {
 
     private final Environment environment;
