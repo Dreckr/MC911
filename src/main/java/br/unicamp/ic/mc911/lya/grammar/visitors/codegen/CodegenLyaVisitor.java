@@ -401,6 +401,7 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
 
     // TODO: return and result
 
+
     private void addInst(String mnemonic) {
         addInst(mnemonic, null, null);
     }
