@@ -57,10 +57,10 @@ public class Instruction {
 
     @Override
     public String toString() {
-        String stringValue = "(" + mnemonic;
+        String stringValue = "('" + mnemonic + "', ";
 
         if (firstArg != null) {
-            stringValue += ", " + firstArg;
+            stringValue += firstArg;
         }
 
         if (secondArg != null) {

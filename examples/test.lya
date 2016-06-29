@@ -1,8 +1,9 @@
 dcl i, e int = 10;
 
-procedure: proc (n int, m int) returns (int);
-    return n;
-end;
+if i < e then
+    print("asd");
+else
+    print("asdqwe");
+fi;
 
-i = procedure(i, e);
 print("asdsad");

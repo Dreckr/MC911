@@ -37,9 +37,7 @@ public class Main {
         codegenVisitor.visit(programContext);
 
         if (!errorListener.hasErrors) {
-            System.out.println(environment);
-
-            System.out.print("[");
+            System.out.print("H = [");
             boolean first = true;
             for (StringConstant stringConstant : environment.getStringHeap()) {
                 if (!first) System.out.print(", ");
@@ -49,15 +47,13 @@ public class Main {
 
             System.out.println("]");
 
-            System.out.println("[");
+            System.out.print("P = [");
             first = true;
             for (Instruction instruction: environment.getInstructions()) {
                 if (!first)
-                    System.out.print("\t,");
-                else
-                    System.out.print("\t");
+                    System.out.print(", ");
 
-                System.out.println(instruction);
+                System.out.print(instruction);
                 first = false;
             }
 

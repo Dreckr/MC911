@@ -125,17 +125,10 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
     @Override
     // TODO: handle composite types
     public Environment visitAssignment_action(LyaParser.Assignment_actionContext context) {
-        Symbol symbol = environment.findSymbol(context.location().location_name().getText());
+        LyaParser.LocationContext locationContext=  context.location();
+        Variable variable = null;
 
-        if (symbol == null) {
-            throwError("Undefined symbol " + context.location().location_name().getText(), context);
-        }
-
-        Variable variable = environment.findVariable(symbol);
-
-        if (variable == null) {
-            throwError("Undefined variable " + symbol.getValue(), context);
-        }
+        variable = environment.findVariable(locationContext.location_name().getText());
 
         if (context.assigning_operator().closed_dyadic_operator() != null) {
             addInst("ldv", variable.getScope(), variable.getDisplacement());
@@ -218,6 +211,7 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
     @Override
     public Environment visitIf_action(LyaParser.If_actionContext context) {
         Integer afterIfLabelIndex = environment.nextLabelIndex();
+        Integer afterElseLabelIndex = environment.nextLabelIndex();
         visit(context.boolean_expression());
 
         addInst("jof", afterIfLabelIndex);
@@ -230,6 +224,8 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
             visit(context.else_clause());
         }
 
+        addInst("jmp", afterElseLabelIndex);
+
         return environment;
     }
 
@@ -241,6 +237,7 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
             }
         } else {
             Integer afterElseIfLabelIndex = environment.nextLabelIndex();
+            Integer afterElseLabelIndex = environment.nextLabelIndex();
             visit(context.boolean_expression());
 
             addInst("jof", afterElseIfLabelIndex);
@@ -253,6 +250,8 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
                 visit(context.else_clause());
             }
 
+            addInst("jmp", afterElseLabelIndex);
+
         }
 
         return environment;
@@ -264,7 +263,7 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
             for (LyaParser.Action_statementContext action : context.action_statement()) {
                 visit(action);
             }
-        } else if (context.control_part().while_control() != null) {
+        } else if (context.control_part().for_control() == null) {
             Integer doLabelIndex = environment.nextLabelIndex();
             Integer afterDoLabelIndex = environment.nextLabelIndex();
             addInst("lbl", doLabelIndex);
@@ -299,6 +298,12 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
                 visit(stepEnumeration.end_value());
 
                 addInst("leq");
+
+                if (context.control_part().while_control() != null) {
+                    visit(context.control_part().while_control().boolean_expression());
+                    addInst("and");
+                }
+
                 addInst("jof", afterDoLabelIndex);
 
                 addInst("ldv", loopCounter.getScope(), loopCounter.getDisplacement());
