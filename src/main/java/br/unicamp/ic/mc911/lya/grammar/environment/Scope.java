@@ -9,6 +9,7 @@ public class Scope extends HashMap<String, Symbol> {
 
     private final int index;
     private int nextPosition = 0;
+    private int returnDisplacement = -1;
 
     public Scope(int index) {
         super();
@@ -27,5 +28,11 @@ public class Scope extends HashMap<String, Symbol> {
         return position;
     }
 
-    // TODO: keep track of allocated size
+    public void setReturnDisplacement(int returnDisplacement) {
+        this.returnDisplacement = returnDisplacement;
+    }
+
+    public int getReturnDisplacement() {
+        return returnDisplacement;
+    }
 }

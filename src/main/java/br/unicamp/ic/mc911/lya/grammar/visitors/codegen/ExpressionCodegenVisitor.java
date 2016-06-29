@@ -5,6 +5,8 @@ import br.unicamp.ic.mc911.lya.grammar.LyaParser;
 import br.unicamp.ic.mc911.lya.grammar.environment.*;
 import br.unicamp.ic.mc911.lya.grammar.visitors.utils.LyaUtils;
 
+import java.util.List;
+
 import static br.unicamp.ic.mc911.lya.grammar.visitors.utils.LyaUtils.throwError;
 
 /**
@@ -276,6 +278,24 @@ public class ExpressionCodegenVisitor extends LyaBaseVisitor<Type> {
         }
 
         return type;
+    }
+
+    @Override
+    public Type visitProcedure_call(LyaParser.Procedure_callContext context) {
+        Symbol procedureName = environment.findSymbol(context.procedure_name().getText());
+        Procedure procedure = environment.findProcedure(procedureName);
+        Label procedureLabel = environment.findLabel(procedureName);
+
+        List<LyaParser.ParameterContext> parameters = context.parameter_list().parameter();
+        for (int i = parameters.size() - 1; i >= 0; i--) {
+            LyaParser.ParameterContext parameter = parameters.get(i);
+
+            visit(parameter.expression());
+        }
+
+        addInst("cfu", procedureLabel.getIndex());
+
+        return procedure.getReturnType();
     }
 
     private void addInst(String mnemonic) {

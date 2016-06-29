@@ -368,12 +368,11 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
                 parameterDisplacement += size;
             }
         }
+        scope.setReturnDisplacement(-(2 + parameterDisplacement));
 
         for (LyaParser.StatementContext statementContext : context.procedure_definition().statement()) {
             visit(statementContext);
         }
-
-        addInst("dlc", environment.getCurrentScope().getAndIncrementNextPosition(0));
 
         environment.leaveScope();
 
@@ -399,8 +398,28 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
         return environment;
     }
 
-    // TODO: return and result
+    @Override
+    public Environment visitReturn_action(LyaParser.Return_actionContext context) {
+        Scope scope = environment.getCurrentScope();
+        if (context.result() != null) {
+            visit(context.result());
+        }
 
+        addInst("ret", scope.getIndex(), environment.getCurrentScope().getAndIncrementNextPosition(0));
+
+        return environment;
+    }
+
+    @Override
+    public Environment visitResult(LyaParser.ResultContext  context) {
+        Scope scope = environment.getCurrentScope();
+
+        visit(context.expression());
+
+        addInst("stv", scope.getIndex(), scope.getReturnDisplacement());
+
+        return environment;
+    }
 
     private void addInst(String mnemonic) {
         addInst(mnemonic, null, null);

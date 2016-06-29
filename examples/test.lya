@@ -1,9 +1,7 @@
 dcl i, e int = 10;
 
 procedure: proc (n int, m int) returns (int);
-    dcl a int = 10;
-    print(n);
     return n;
 end;
 
-procedure(i, e);
+i = procedure(i, e);

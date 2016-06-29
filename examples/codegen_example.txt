@@ -17,9 +17,9 @@ print (p(m, n, b));
 Scope level for ProcStmt p: 1
   formal parameters & their offsets
   x : -2
+  y : -3
   b : -4
   _ret : -5
-  y : -3
   variables & their offsets
   s : 0
 '''
