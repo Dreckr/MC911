@@ -1,5 +1,7 @@
 package br.unicamp.ic.mc911.lya.grammar;
 
+import br.unicamp.ic.mc911.lya.grammar.environment.Instruction;
+import br.unicamp.ic.mc911.lya.grammar.environment.StringConstant;
 import br.unicamp.ic.mc911.lya.grammar.visitors.codegen.CodegenLyaVisitor;
 import br.unicamp.ic.mc911.lya.grammar.visitors.semantic.SemanticAnalysisVisitor;
 import br.unicamp.ic.mc911.lya.grammar.environment.Environment;
@@ -37,8 +39,30 @@ public class Main {
         if (!errorListener.hasErrors) {
             System.out.println(environment);
 
-            System.out.println(environment.getStringHeap());
-            System.out.println(environment.getInstructions());
+            System.out.print("[");
+            boolean first = true;
+            for (StringConstant stringConstant : environment.getStringHeap()) {
+                if (!first) System.out.print(", ");
+                System.out.print("\"" + stringConstant.getString() + "\"");
+                first = false;
+            }
+
+            System.out.println("]");
+
+            System.out.println("[");
+            first = true;
+            for (Instruction instruction: environment.getInstructions()) {
+                if (!first)
+                    System.out.print("\t,");
+                else
+                    System.out.print("\t");
+
+                System.out.println(instruction);
+                first = false;
+            }
+
+            System.out.println("]");
+
         }
     }
 

@@ -5,3 +5,4 @@ procedure: proc (n int, m int) returns (int);
 end;
 
 i = procedure(i, e);
+print("asdsad");
