@@ -1,7 +1,7 @@
-# compilers-lya-programming-language
-Repository for lya programming language (final project of compilers course)
+# VM for Lya Programming Language
+Repository for Lya Programming Language (final project of compilers course)
 
-## sources
+## Sources
 
 * language grammar and description: https://iviarcio.wordpress.com/lya-bnf-grammar/
 * Lexical and syntactic analysis: https://iviarcio.wordpress.com/project-1/
@@ -10,3 +10,14 @@ Repository for lya programming language (final project of compilers course)
 
 Diego Rocha - 135494
 Eric Lopes - 076624
+
+## Requirements
+Maven 3
+Python 2
+
+## Running
+```
+bin/lya.sh examples/test.lya
+```
+
+## New stuff implemented

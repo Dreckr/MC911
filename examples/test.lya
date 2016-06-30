@@ -1,9 +1,7 @@
 dcl i, e int = 10;
+i = 3;
 
 if i < e then
-    print("asd");
-else
-    print("asdqwe");
+    print("Hey:");
+    print(i);
 fi;
-
-print("asdsad");

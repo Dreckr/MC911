@@ -10,7 +10,9 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author Diego Rocha (diego.rocha@movile.com)
@@ -36,30 +38,34 @@ public class Main {
         semanticAnalysisVisitor.visit(programContext);
         codegenVisitor.visit(programContext);
 
+        PrintWriter pw = new PrintWriter(new FileWriter("out.lvm"));
+
         if (!errorListener.hasErrors) {
-            System.out.print("H = [");
+            pw.write("H = [");
             boolean first = true;
             for (StringConstant stringConstant : environment.getStringHeap()) {
-                if (!first) System.out.print(", ");
-                System.out.print("\"" + stringConstant.getString() + "\"");
+                if (!first) pw.write(", ");
+                pw.write("\"" + stringConstant.getString() + "\"");
                 first = false;
             }
 
-            System.out.println("]");
+            pw.write("]\n");
 
-            System.out.print("P = [");
+            pw.write("P = [");
             first = true;
             for (Instruction instruction: environment.getInstructions()) {
                 if (!first)
-                    System.out.print(", ");
+                    pw.write(", ");
 
-                System.out.print(instruction);
+                pw.write(instruction.toString());
                 first = false;
             }
 
-            System.out.println("]");
+            pw.write("]\n");
 
         }
+
+        pw.close();
     }
 
 }

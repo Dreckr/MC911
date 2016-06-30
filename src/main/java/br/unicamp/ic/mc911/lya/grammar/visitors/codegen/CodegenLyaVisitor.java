@@ -78,7 +78,7 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
             }
 
             // Allocate space
-            addInst("alc", scope.getIndex(), size * declarationVariables.size());
+            addInst("alc", size * declarationVariables.size());
 
             if (declaration.initialization() != null) {
                 // Set value
@@ -196,11 +196,21 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
 
         } else if (builtinName.equals("print")) {
             for (LyaParser.ParameterContext parameterContext : context.parameter_list().parameter()) {
-                Type type = expressionCodegenVisitor.visit(parameterContext.expression());
-                if (type == PrimitiveType.STRING) {
-                    addInst("prs");
+                Object constant = null;
+                try {
+                    constant = constantExpressionExtractorVisitor.visit(parameterContext.expression());
+                } catch(Exception ignored) {}
+
+                if (constant != null && constant instanceof StringConstant) {
+                    addInst("prc", ((StringConstant) constant).getIndex());
                 } else {
-                    addInst("prv");
+                    Type type = expressionCodegenVisitor.visit(parameterContext.expression());
+
+                    if (type == PrimitiveType.STRING) {
+                        addInst("prs");
+                    } else {
+                        addInst("prv");
+                    }
                 }
             }
         }
@@ -218,13 +228,15 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
 
         visit(context.then_clause());
 
+        addInst("jmp", afterElseLabelIndex);
+
         addInst("lbl", afterIfLabelIndex);
 
         if (context.else_clause() != null) {
             visit(context.else_clause());
         }
 
-        addInst("jmp", afterElseLabelIndex);
+        addInst("lbl", afterElseLabelIndex);
 
         return environment;
     }
@@ -244,13 +256,15 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
 
             visit(context.then_clause());
 
+            addInst("jmp", afterElseLabelIndex);
+
             addInst("lbl", afterElseIfLabelIndex);
 
             if (context.else_clause() != null) {
                 visit(context.else_clause());
             }
 
-            addInst("jmp", afterElseLabelIndex);
+            addInst("lbl", afterElseLabelIndex);
 
         }
 

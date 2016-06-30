@@ -41,7 +41,7 @@ public class ConstantExpressionExtractorVisitor extends LyaBaseVisitor<Object> {
     @Override
     public StringConstant visitCharacter_string_literal(LyaParser.Character_string_literalContext context) {
         String text = context.getText();
-        text = text.substring(1, text.length() - 2);
+        text = text.substring(1, text.length() - 1);
 
         return environment.addStringConstant(text);
     }
