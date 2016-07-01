@@ -58,7 +58,7 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
             Type type = LyaUtils.typeFromModeContext(environment, declaration.modo());
 
             // Get size
-            int size = LyaUtils.typeSize(environment, type, declaration.modo().composite_mode());
+            int size = LyaUtils.sizeFromMode(environment, declaration.modo());
 
             for (TerminalNode identifier : declaration.identifier_list().IDENTIFIER()) {
                 Location location = environment.findLocation(identifier.getText());
@@ -69,9 +69,17 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
 
                 Symbol name = location.getName();
 
-                // Create variables
-                Variable variable =
-                    new Variable(name, type, size, scope.getIndex(), scope.getAndIncrementNextPosition(size));
+                Variable variable;
+                if (type.isComposite()) {
+                    List<Integer> indexesSizes =
+                            LyaUtils.compositeIndexesSizes(environment, declaration.modo().composite_mode());
+
+                    variable =
+                            new Variable(name, type, size, scope.getIndex(), scope.getAndIncrementNextPosition(size), indexesSizes);
+                } else {
+                    variable =
+                            new Variable(name, type, size, scope.getIndex(), scope.getAndIncrementNextPosition(size));
+                }
 
                 declarationVariables.add(variable);
                 environment.addVariable(variable);
@@ -125,43 +133,78 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
     @Override
     // TODO: handle composite types
     public Environment visitAssignment_action(LyaParser.Assignment_actionContext context) {
-        LyaParser.LocationContext locationContext=  context.location();
-        Variable variable = null;
+        LyaParser.LocationContext locationContext =  context.location();
+        if (locationContext.array_element() != null) {
+            LyaParser.Array_elementContext arrayElement = locationContext.array_element();
+            // Load reference
+            Variable variable = environment.findVariable(arrayElement.array_location().getText());
+            addInst("ldr", variable.getScope(), variable.getDisplacement());
 
-        variable = environment.findVariable(locationContext.location_name().getText());
+            // Load displacement
+            int currentIndex = 0;
+            for (LyaParser.ExpressionContext indexExpression : arrayElement.expression_list().expression()) {
+                visit(indexExpression);
+                addInst("ldc", 1);
+                addInst("sub");
 
-        if (context.assigning_operator().closed_dyadic_operator() != null) {
-            addInst("ldv", variable.getScope(), variable.getDisplacement());
+                int dimSize = 1;
+                for (int i = currentIndex + 1; i < variable.getIndexesSizes().size(); i++) {
+                    dimSize *= variable.getIndexesSizes().get(i);
+                }
 
-            expressionCodegenVisitor.visit(context.expression());
+                addInst("idx", dimSize);
 
-            switch (context.assigning_operator().closed_dyadic_operator().getText().charAt(0)) {
-                case '+':
-                    addInst("add");
-                    break;
-                case '-':
-                    addInst("sub");
-                    break;
-                case '*':
-                    addInst("mul");
-                    break;
-                case '/':
-                    addInst("div");
-                    break;
-                case '%':
-                    addInst("mod");
-                    break;
-                case '&':
-                    // TODO
-                    break;
-                default:
-                    throwError("Illegal dyadic operator " + context.assigning_operator().closed_dyadic_operator().getText(), context);
+                currentIndex++;
             }
-        } else {
-            expressionCodegenVisitor.visit(context.expression());
-        }
 
-        addInst("stv", variable.getScope(), variable.getDisplacement());
+            expressionCodegenVisitor.visit(context.expression());
+
+            addInst("smv", 1);
+
+        } else if (locationContext.array_slice() != null) {
+            throwError("unimplemented", context);
+        } else if (locationContext.string_element() != null) {
+            throwError("unimplemented", context);
+        } else if (locationContext.string_slice() != null) {
+            throwError("unimplemented", context);
+        } else if (locationContext.location_name() != null) {
+            Variable variable = environment.findVariable(locationContext.location_name().getText());
+
+            if (context.assigning_operator().closed_dyadic_operator() != null) {
+                addInst("ldv", variable.getScope(), variable.getDisplacement());
+
+                expressionCodegenVisitor.visit(context.expression());
+
+                switch (context.assigning_operator().closed_dyadic_operator().getText().charAt(0)) {
+                    case '+':
+                        addInst("add");
+                        break;
+                    case '-':
+                        addInst("sub");
+                        break;
+                    case '*':
+                        addInst("mul");
+                        break;
+                    case '/':
+                        addInst("div");
+                        break;
+                    case '%':
+                        addInst("mod");
+                        break;
+                    case '&':
+                        // TODO
+                        break;
+                    default:
+                        throwError("Illegal dyadic operator " + context.assigning_operator().closed_dyadic_operator().getText(), context);
+                }
+            } else {
+                expressionCodegenVisitor.visit(context.expression());
+            }
+
+            addInst("stv", variable.getScope(), variable.getDisplacement());
+        } else {
+            throwError("what?", context);
+        }
 
         return environment;
     }
@@ -320,6 +363,10 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
 
                 addInst("jof", afterDoLabelIndex);
 
+                for (LyaParser.Action_statementContext action : context.action_statement()) {
+                    visit(action);
+                }
+
                 addInst("ldv", loopCounter.getScope(), loopCounter.getDisplacement());
 
                 if (stepEnumeration.step_value() != null) {
@@ -336,10 +383,6 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
 
                 addInst("stv", loopCounter.getScope(), loopCounter.getDisplacement());
 
-                for (LyaParser.Action_statementContext action : context.action_statement()) {
-                    visit(action);
-                }
-
                 addInst("jmp", doLabelIndex);
 
                 addInst("lbl", afterDoLabelIndex);
@@ -354,6 +397,7 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
     public Environment visitProcedure_statement(LyaParser.Procedure_statementContext context) {
         String procedureName = context.procedure_name().getText();
         Symbol procedureSymbol = environment.findSymbol(procedureName);
+        Procedure procedure = environment.findProcedure(procedureSymbol);
 
         Integer procedureLabelIndex = environment.nextLabelIndex();
         Integer afterProcedureLabelIndex = environment.nextLabelIndex();
@@ -371,16 +415,27 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
                 context.procedure_definition().formal_parameter_list().formal_parameter();
         for (int i =  0; i < formalParameters.size(); i++) {
             LyaParser.Formal_parameterContext parameter = formalParameters.get(i);
+            int size = LyaUtils.sizeFromMode(environment, parameter.parameter_spec().modo());
 
             List<TerminalNode> identifiers = parameter.identifier_list().IDENTIFIER();
             for (int j = 0; j < identifiers.size(); j++) {
                 TerminalNode identifier = identifiers.get(j);
                 Location parameterLocation = environment.findLocation(identifier.getText());
                 Type type = parameterLocation.getType();
-                int size = LyaUtils.typeSize(environment, type, context);
+                Symbol name = parameterLocation.getName();
 
-                Variable variable =
-                        new Variable(parameterLocation.getName(), type, size, scope.getIndex(), -(2 + parameterDisplacement));
+                Variable variable;
+                if (type.isComposite()) {
+                    List<Integer> indexesSizes =
+                            LyaUtils.compositeIndexesSizes(environment, parameter.parameter_spec().modo().composite_mode());
+
+                    variable =
+                            new Variable(name, type, size, scope.getIndex(), -(2 + parameterDisplacement), indexesSizes);
+                } else {
+                    variable =
+                            new Variable(name, type, size, scope.getIndex(), -(2 + parameterDisplacement));
+                }
+
                 environment.addVariable(variable);
 
                 parameterDisplacement += size;
@@ -393,6 +448,14 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
         }
 
         environment.leaveScope();
+
+        addInst("dlc", scope.getAndIncrementNextPosition(0));
+
+        if (procedure.getReturnType() == VoidType.VOID) {
+            addInst("ret", scope.getIndex(), parameterDisplacement + 1);
+        } else {
+            addInst("ret", scope.getIndex(), parameterDisplacement);
+        }
 
         addInst("lbl", afterProcedureLabelIndex);
 

@@ -246,6 +246,33 @@ public class ExpressionCodegenVisitor extends LyaBaseVisitor<Type> {
     }
 
     @Override
+    public Type visitArray_element(LyaParser.Array_elementContext context) {
+        Variable variable = environment.findVariable(context.array_location().getText());
+        addInst("ldr", variable.getScope(), variable.getDisplacement());
+
+        // Load displacement
+        int currentIndex = 0;
+        for (LyaParser.ExpressionContext indexExpression : context.expression_list().expression()) {
+            visit(indexExpression);
+            addInst("ldc", 1);
+            addInst("sub");
+
+            int dimSize = 1;
+            for (int i = currentIndex + 1; i < variable.getIndexesSizes().size(); i++) {
+                dimSize *= variable.getIndexesSizes().get(i);
+            }
+
+            addInst("idx", dimSize);
+
+            currentIndex++;
+        }
+
+        addInst("grc");
+
+        return variable.getType().getTypeParameter();
+    }
+
+    @Override
     public Type visitLocation_name(LyaParser.Location_nameContext context) {
         Type type = null;
         String locationName = context.getText();

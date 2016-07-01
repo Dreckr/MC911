@@ -1,4 +1,4 @@
-KD = 10 # Max length of function vector
+KD = 100 # Max length of function vector
 KM = 100 # Max length of memory vector
 
 D = [0]*KD
@@ -132,7 +132,7 @@ def _cfu(p):
   global sp, pc, M
   sp = sp + 1
   M[sp] = pc + 1
-  pc = p-1
+  pc = I[p]
 
 def _enf(k): 
   global sp, D, M
@@ -258,7 +258,6 @@ if __name__ == "__main__":
     instruction = P[pc]
     name_instruction = instruction[0]
     function_args = instruction[1:]
-    #print(instruction)
     instructionMap[name_instruction](*function_args)
     pc = pc + 1 if pc >= 0 else -1
 

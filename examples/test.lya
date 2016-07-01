@@ -1,7 +1,22 @@
-dcl i, e int = 10;
-i = 3;
+/* example2: */
 
-if i < e then
-    print("Hey:");
-    print(i);
-fi;
+dcl z,t int;
+
+g: proc (a int);
+  dcl x int;
+  a *= 2;
+  x  = 2*a;
+  z  = x+1;
+end;
+
+z = 3;
+t = 4;
+print("a");
+g(t);
+print(z,t);
+print("b");
+g(z); print(z,t);
+print("c");
+g(t+z); print(z,t);
+print("d");
+g(7); print(z,t);
