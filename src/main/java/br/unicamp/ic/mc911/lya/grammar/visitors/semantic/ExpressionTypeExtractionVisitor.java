@@ -211,12 +211,6 @@ public class ExpressionTypeExtractionVisitor extends LyaBaseVisitor<Type> {
     }
 
     @Override
-    public Type visitDereferenced_reference(LyaParser.Dereferenced_referenceContext context) {
-        // TODO: wtf?
-        return null;
-    }
-
-    @Override
     public Type visitArray_element(LyaParser.Array_elementContext context) {
         String locationName = context.array_location().getText();
 

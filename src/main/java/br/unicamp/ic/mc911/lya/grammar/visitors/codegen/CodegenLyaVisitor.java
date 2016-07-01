@@ -131,7 +131,6 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
     }
 
     @Override
-    // TODO: handle composite types
     public Environment visitAssignment_action(LyaParser.Assignment_actionContext context) {
         LyaParser.LocationContext locationContext =  context.location();
         if (locationContext.array_element() != null) {
@@ -160,13 +159,6 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
             expressionCodegenVisitor.visit(context.expression());
 
             addInst("smv", 1);
-
-        } else if (locationContext.array_slice() != null) {
-            throwError("unimplemented", context);
-        } else if (locationContext.string_element() != null) {
-            throwError("unimplemented", context);
-        } else if (locationContext.string_slice() != null) {
-            throwError("unimplemented", context);
         } else if (locationContext.location_name() != null) {
             Variable variable = environment.findVariable(locationContext.location_name().getText());
 
@@ -190,9 +182,6 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
                         break;
                     case '%':
                         addInst("mod");
-                        break;
-                    case '&':
-                        // TODO
                         break;
                     default:
                         throwError("Illegal dyadic operator " + context.assigning_operator().closed_dyadic_operator().getText(), context);
@@ -387,7 +376,7 @@ public class CodegenLyaVisitor extends LyaBaseVisitor<Environment> {
 
                 addInst("lbl", afterDoLabelIndex);
 
-            } // TODO: range mode
+            }
         }
 
         return environment;

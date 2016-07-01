@@ -113,7 +113,7 @@ public class ExpressionCodegenVisitor extends LyaBaseVisitor<Type> {
                     default:
                         throwError("Unsupported binary operator " + binaryOperator.name(), context);
                 }
-            } // TODO: IN operator
+            }
         }
 
         return type;
@@ -143,7 +143,7 @@ public class ExpressionCodegenVisitor extends LyaBaseVisitor<Type> {
                         throwError("Unsupported binary operator " + binaryOperator.name(), context);
                 }
 
-            } // TODO: string concatenation
+            }
         }
 
         return type;
